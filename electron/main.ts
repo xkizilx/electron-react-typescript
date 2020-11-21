@@ -1,30 +1,20 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
-let win: BrowserWindow | null;
+const installDevExtensions = () => {
 
-const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
-
-  return Promise.all(
-    extensions.map((name) => installer.default(installer[name], forceDownload)),
-  ).catch(console.log); // eslint-disable-line no-console
-};
+  [REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS].forEach(ext =>
+    installExtension(ext)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err)));
+}
 
 const createWindow = async () => {
-  if (process.env.NODE_ENV !== 'production') {
-    await installExtensions();
-  }
+  const win = new BrowserWindow({ width: 800, height: 600 });
 
-  win = new BrowserWindow({ width: 800, height: 600 });
-
-  if (process.env.NODE_ENV !== 'production') {
-    process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1'; // eslint-disable-line require-atomic-updates
-    win.loadURL('http://localhost:2003');
-  } else {
+  if (!!app.isPackaged) {
     win.loadURL(
       url.format({
         pathname: path.join(__dirname, 'index.html'),
@@ -32,18 +22,14 @@ const createWindow = async () => {
         slashes: true,
       }),
     );
+  } else {
+    process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
+    installDevExtensions();
+    win.loadURL('http://localhost:2003');
+    win.webContents.openDevTools()
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
-    win.webContents.once('dom-ready', () => win!.webContents.openDevTools());
-  }
-
-  win.on('closed', () => {
-    win = null;
-  });
 };
 
-app.on('ready', createWindow);
-app.on('window-all-closed', () => app.quit());
-app.on('activate', () => win === null && createWindow());
+app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit());
+app.whenReady().then(createWindow);
