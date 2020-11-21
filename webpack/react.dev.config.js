@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 const spawn = require('child_process').spawn;
 
-const baseConfig = require('./renderer.config');
+const baseConfig = require('./react.config');
 
 module.exports = merge.smart(baseConfig, {
   resolve: {
@@ -24,7 +24,7 @@ module.exports = merge.smart(baseConfig, {
     before() {
       if (process.env.START_HOT) {
         console.log('Starting main process');
-        spawn('npm', ['run', 'start-main'], {
+        spawn('npm', ['run', 'start-electron'], {
           shell: true,
           env: process.env,
           stdio: 'inherit'
