@@ -1,6 +1,6 @@
 {
-  "name": "electron-react-typescript",
-  "version": "0.0.7",
+  "name": "electron-react-typescript-redux",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
@@ -56,19 +56,11 @@
       "target": "nsis"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com:Robinfr/electron-react-typescript.git"
-  },
   "author": {
     "name": "Your name",
     "email": "Your email"
   },
   "license": "SEE LICENSE",
-  "bugs": {
-    "url": "https://github.com/Robinfr/electron-react-typescript/issues"
-  },
-  "homepage": "https://github.com/Robinfr/electron-react-typescript",
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
