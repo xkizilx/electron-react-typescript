@@ -2,7 +2,7 @@
   "name": "electron-react-typescript",
   "version": "0.0.7",
   "description": "",
-  "main": "./dist/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "build-main": "cross-env NODE_ENV=production webpack --config webpack/main.prod.config.js",
     "build-renderer": "cross-env NODE_ENV=production webpack --config webpack/renderer.prod.config.js",

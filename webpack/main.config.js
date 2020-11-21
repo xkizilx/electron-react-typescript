@@ -36,15 +36,14 @@ module.exports = merge.smart(baseConfig, {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
-      reportFiles: ['src/main/**/*']
+      reportFiles: ['./src/main/**/*']
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-
     }),
     new NodemonPlugin({
       watch: path.resolve('./dist'),
-      exec: "electron ./dist/main.js"
+      exec: "electron"
     })
   ]
 });

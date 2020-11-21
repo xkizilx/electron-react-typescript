@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import Counter from '../components/Counter';
 import { RootState } from '../reducers';
-import { CounterAction, decrement, increment } from '../actions/counterActions';
+import { CounterAction, decrement, increment } from '../actions/counter';
 
 const mapStateToProps = (state: RootState) => ({
   value: state.counter.value,
