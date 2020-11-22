@@ -1,5 +1,4 @@
-import { Action } from 'redux';
-import { AC } from '../aliaces';
+import { Action, ActionCreator as AC } from 'redux';
 
 export interface Increment extends Action {
   type: 'INCREMENT';
